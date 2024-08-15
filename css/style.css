@@ -1,114 +1,156 @@
-*{
-  margin: 0px;
-  padding:0px;
+* {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
-body{
-  background-color: #b30000;  
+body {
+  background-color: #b30000;
+  font-family: "Matemasie", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: calc(16px + 0.5vw);
 }
 
-header#cabecalho-principal{
-  background-color: #dddddd ;
+header {
+  background-color: #cecece;
   width: 100%;
-  height: 40px;
-
+  height: 45px;
   display: flex;
-  flex-direction: row;
-
   justify-content: space-between;
   align-items: center;
-
+  padding: 0 10px;
 }
 
-
-#pontuacao-game{
+#pontuacao-game {
   background-color: #61B1EA;
   border-radius: 30px;
-  padding: 10px;
-  color: white;
-  padding: 5px 50px;
-
-  font-size: 20px;
+  padding: 5px 20px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  font-size: calc(14px + 0.5vw);
   font-weight: 700;
-
-  margin-left: 15px;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
 }
 
-#pontuacao-game img{
-  margin-right: 15px;
+#pontuacao-game img {
+  margin-right: 10px;
 }
 
-#nome-jogo{
-  font-weight: bolder;
-  font-size: 27px;
-  margin-right: 20px;
+#nome-jogo {
+  font-weight: 800;
+  font-size: calc(48px + 0.7vw);
+  margin: 0;
 }
 
-section#corpo{
-  display: flex;
-  flex-direction: row;
-  margin-top: 15px;
-}
-
-section#corpo div#direita{
-
-}
-
-section#corpo div#esquerda{
-
-
-  color: white;
+section {
   display: flex;
   flex-direction: column;
-  width: 60%;
-
   align-items: center;
-
-
+  margin-top: 15px;
+  padding: 0 10px;
 }
 
-section#corpo div#esquerda div#cor-atual{
-  margin-top: 10px;
-  height: 200px;
-  width: 200px;
+section div #game {
+  font-size: 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  align-items: center;
+  text-align: center;
+}
 
-  border: 10px solid black;
+section div #game div#numero-atual {
+  margin-top: 1rem;
+  height: 9rem;
+  width: 9rem;
+  padding-top: 3rem;
+  text-align: center;
+  border: 8px solid #000000;
   border-radius: 15px;
-
 }
 
-
-section#corpo div#esquerda button#btn-responder{
-
-  background-color: transparent;
+section div #game button#btn-responder {
+  background-color: #dcdcdc;
   margin-top: 10px;
-
-  background-color: transparent;
-  border: 2px solid white;
+  border: 2px solid #ffffff;
   border-radius: 8px;
-  
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
-  color: white;
-  padding: 15px 45px;
-
+  color: #000000;
+  padding: 10px 30px;
 }
 
-
-div#container footer#rodape{
-  background-color: rgb(26, 26, 32);
+div#container footer#rodape {
+  background-color: #1a1a20;
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
-  height: 160px;
-
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+#image {
+  position: relative;
+  /* transform: translateX(-50%); */
+}
+
+/* Media Queries para Responsividade */
+@media (max-width: 768px) {
+  #nome-jogo {
+    font-size: calc(20px + 1vw);
+  }
+
+section div #game div#numero-atual {
+  height: 8rem;
+  width: 8rem;
+  padding-top: 2.5rem;
+  border: 4px solid #000000;
+}
+
+  section div #game button#btn-responder {
+    font-size: 18px;
+    padding: 8px 25px;
+  }
+
+  #image img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: calc(14px + 1vw);
+  }
+
+  header {
+    height: 40px;
+  }
+
+  #nome-jogo {
+    font-size: calc(16px + 1vw);
+  }
+
+  section div #game div#numero-atual {
+    height: 6rem;
+    width: 6rem;
+    padding-top: 1.5rem;
+    border: 4px solid #000000;
+  }
+
+  section div #game button#btn-responder {
+    font-size: 16px;
+    padding: 6px 20px;
+  }
+
+  #image img {
+    height: 200px;
+  }
+
+  div#container footer#rodape {
+    height: 100px;
+  }
 }

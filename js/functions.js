@@ -1,102 +1,104 @@
 var engine = {
-    "cores": ['green','purple','pink','red','yellow','orange','grey','black'],
-    "hexadecimais":{
-      'green':'#02EF00',
-      'purple':'#790093',
-      'pink': '#F02A7E',
-      'red':'#E90808',
-      'yellow':'#E7D703',
-      'orange':'#F16529',
-      'grey':'#EBEBEB',
-      'black':'#141414',
+    "numbers": ['0','1','2','3','4','5','6','7','8','9','10',],
+    "textNumbers": {
+        0: 'Zero',
+        1: 'One',
+        2: 'Two',
+        3: 'Three',
+        4: 'Four',
+        5: 'Five',
+        6: 'Six',
+        7: 'Seven',
+        8: 'Eight',
+        9: 'Nine',
+        10: 'Ten',
     },
-    "moedas":0
+    "moedas": 0
 }
 
 const audioMoeda = new Audio('audio/moeda.mp3');
 const audioErrou = new Audio('audio/errou.mp3');
 
-function sortearCor(){
-  var indexCorSorteada = Math.floor(Math.random() * engine.cores.length);
-  var legendaCorDaCaixa = document.getElementById('cor-na-caixa');
-  var nomeCorSorteada = engine.cores[indexCorSorteada];
+function selectRondomNumber() {
+    var indexSelectedNumber = Math.floor(Math.random() * 10);
+    var subtitleTextNumber = document.getElementById('subtilte-number');
+    var selectedNumber = engine.numbers[indexSelectedNumber];
 
-  legendaCorDaCaixa.innerText = nomeCorSorteada.toUpperCase();
+    subtitleTextNumber.innerText = selectedNumber.toUpperCase();
 
-  return engine.hexadecimais[nomeCorSorteada];
+    return engine.textNumbers[selectedNumber];
 }
 
 
-function aplicarCorNaCaixa(nomeDaCor){
-  var caixaDasCores = document.getElementById('cor-atual');
-  
-  caixaDasCores.style.backgroundColor = nomeDaCor;
-  caixaDasCores.style.backgroundImage = "url('/img/caixa-fechada.png')";
-  caixaDasCores.style.backgroundSize = "100%";
+function alterarNumeroExibido(NumeroAtual) {
+    var divExibeNumero = document.getElementById('numero-atual');
+
+    divExibeNumero.textContent = NumeroAtual;
+    divExibeNumero.style.backgroundSize = "100%";
 
 }
 
 
-function atualizaPontuacao(valor){
-  var pontuacao = document.getElementById('pontuacao-atual');
+function atualizaPontuacao(valor) {
+    var pontuacao = document.getElementById('pontuacao-atual');
 
-  engine.moedas += valor;
+    engine.moedas += valor;
 
-  if(valor < 0){
-    audioErrou.play();
-  }else{
-    audioMoeda.play();
-  }
+    if (valor < 0) {
+        audioErrou.play();
+    } else {
+        audioMoeda.play();
+    }
 
-  pontuacao.innerText = engine.moedas;
+    pontuacao.innerText = engine.moedas;
 }
 
-aplicarCorNaCaixa(sortearCor())
+alterarNumeroExibido(selectRondomNumber())
 //API DE RECONHECIMENTO DE VOZ
-var btnGravador = document.getElementById("btn-responder");
+var btnRecorder = document.getElementById("btn-responder");
 var transcricaoAudio = "";
 var respostaCorreta = "";
 
-if(window.SpeechRecognition || window.webkitSpeechRecognition){
-  var SpeechAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var gravador = new SpeechAPI();
+if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+    var SpeechAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var recorder = new SpeechAPI();
 
-  gravador.continuos = false;
-  gravador.lang = "en-US";
+    recorder.continuos = false;
+    recorder.lang = "en-US";
 
 
-  gravador.onstart = function(){
-    btnGravador.innerText = "Estou Ouvindo";
-    btnGravador.style.backgroundColor = "white";
-    btnGravador.style.color = "black";
-  }
-
-  gravador.onend = function(){
-    btnGravador.innerText = "Responder";
-    btnGravador.style.backgroundColor = "transparent";
-    btnGravador.style.color = "white";
-  }
-
-  gravador.onresult = function(event){
-    transcricaoAudio = event.results[0][0].transcript.toUpperCase();
-    respostaCorreta = document.getElementById('cor-na-caixa').innerText.toUpperCase();
-
-    if(transcricaoAudio ===  respostaCorreta){
-      atualizaPontuacao(1);
-    }else{
-      atualizaPontuacao(-1);
+    recorder.onstart = function () {
+        btnRecorder.innerText = "Estou Ouvindo";
+        btnRecorder.style.backgroundColor = "white";
+        btnRecorder.style.color = "black";
     }
 
-    aplicarCorNaCaixa(sortearCor());
+    recorder.onend = function () {
+        btnRecorder.innerText = "Responder";
+        btnRecorder.style.backgroundColor = "blue";
+        btnRecorder.style.color = "white";
+    }
 
-  }
+    recorder.onresult = function (event) {
+        transcricaoAudio = event.results[0][0].transcript.toUpperCase();
+        respostaCorreta = document.getElementById('cor-na-caixa').innerText.toUpperCase();
+
+        if (transcricaoAudio === respostaCorreta) {
+            atualizaPontuacao(1);
+        } else {
+            atualizaPontuacao(-1);
+        }
+
+        alterarNumeroExibido(selectRondomNumber());
+
+    }
 
 
-}else{
-  alert('não tem suporte');
+} else {
+    alert('não tem suporte');
 }
 
 
-btnGravador.addEventListener('click', function(e){
-  gravador.start();
+btnRecorder.addEventListener('click', function (e) {
+    recorder.start();
 })
